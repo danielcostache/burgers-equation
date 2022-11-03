@@ -31,3 +31,8 @@ The tests have been run on [Python 3.9.7](https://www.python.org/downloads/relea
 </h3>
 
 The tests have been run on [Julia 1.8.2](https://julialang.org/downloads/), requiring the following package: [Plots](https://docs.juliaplots.org/stable/)
+
+<h3>
+    Results
+</h3>
+Results for each of the tests can be found in the *images* folder. 
