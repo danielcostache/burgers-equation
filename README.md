@@ -8,10 +8,10 @@ The following repository contains two scripts, written in Python and Julia, with
     Theoretical considerations
 </h2>
 
-Given a field $u(x,t)$ where $u$ represents the velocity of the fluid with the viscosity $\nu$ at a certain $x$ spatial coordinate and $t$ temporal coordinate, the Burger's equation is as following:
-$$ \frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} = \nu\frac{\partial^2 u}{\partial x^2} $$
-In order to find the numerical solution of the equation, the explicit Euler method is used. The value of the function at each step in time is computed using the following formula:
-$$ u(x, t+\Delta t)=u(x,t)+\Delta t\left(-u(x,t)\frac{u(x+\Delta x, t)-u(x,t)}{\Delta x}+\nu\frac{u(x+\Delta x,t)-2u(x,t)+u(x-\Delta x,t)}{\Delta x^2}\right) $$
+Given a field $u(x,t)$ where $u$ represents the velocity of the fluid with the viscosity $\nu$ at a certain $x$ spatial coordinate and $t$ temporal coordinate, the Burger's equation is as following:  
+$ \frac{\partial u}{\partial t} + u\frac{\partial u}{\partial x} = \nu\frac{\partial^2 u}{\partial x^2} $  
+In order to find the numerical solution of the equation, the explicit Euler method is used. The value of the function at each step in time is computed using the following formula:  
+$ u(x, t+\Delta t)=u(x,t)+\Delta t\left(-u(x,t)\frac{u(x+\Delta x, t)-u(x,t)}{\Delta x}+\nu\frac{u(x+\Delta x,t)-2u(x,t)+u(x-\Delta x,t)}{\Delta x^2}\right) $  
 The spatial boundaries are considered absorbing.
 
 <h2>
