@@ -35,4 +35,4 @@ The tests have been run on [Julia 1.8.2](https://julialang.org/downloads/), requ
 <h3>
     Results
 </h3>
-Results for each of the tests can be found in the *images* folder. 
+Results for each of the tests can be found in the <em>images</em> folder. 
