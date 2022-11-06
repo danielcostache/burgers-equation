@@ -14,8 +14,9 @@
 """
 
 from matplotlib import pyplot as plt        # Module used for 2D plotting
-from mpl_toolkits import mplot3d            # Module used for 3D plotting
+from mpl_toolkits.mplot3d import Axes3D     # Module used for 3D plotting
 import numpy as np                          # Module used for array operations
+from matplotlib import animation            # Module used for animation rendering
 
 xi = -5         # Initial spatial coordinate
 xf = 5          # Final spatial coordinate
@@ -75,6 +76,37 @@ ax.set_zlabel("u(x,t)")
 ax.view_init(5, 0)
 plt.savefig("images/python-noise3d-facing.png", format="png")
 
+# Creating an animation which pans the camera around the graph
+figAni1 = plt.figure()
+figAni2 = plt.figure()
+axAni1 = Axes3D(figAni1, auto_add_to_figure=False)
+axAni2 = Axes3D(figAni2, auto_add_to_figure=False)
+figAni1.add_axes(axAni1)
+figAni2.add_axes(axAni2)
+axAni1.set_title("Dependency of the speed on time and spatial coordinate")
+axAni1.set_xlabel("t")
+axAni1.set_ylabel("x")
+axAni1.set_zlabel("u(x,t)")
+axAni2.set_title("Dependency of the speed on time and spatial coordinate")
+axAni2.set_xlabel("t")
+axAni2.set_ylabel("x")
+axAni2.set_zlabel("u(x,t)")
+
+def init():
+    axAni1.contour3D(t, x, (u+noise), 500)
+    axAni2.contour3D(t, x, (u+noise), 500)
+    return ()
+
+def animate(i):
+    axAni1.view_init(elev=25, azim=i)
+    axAni2.view_init(elev=5, azim=i)
+    return ()
+
+anim1 = animation.FuncAnimation(figAni1, animate, init_func=init, frames=360, interval=20, blit=True)
+anim1.save('images/python-noise3d-angle-animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+anim2 = animation.FuncAnimation(figAni2, animate, init_func=init, frames=360, interval=20, blit=True)
+anim2.save('images/python-noise3d-facing-animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+
 # Plotting 2D graphs of u(x,t) as a function of x at the initial and final time moment
 fig3 = plt.figure()
 plt.plot(x, u[:, 0], lw=3, label="Initial time moment")
@@ -93,5 +125,3 @@ plt.ylabel("u(x)")
 plt.title("Dependency of the speed on the spatial coordinate")
 plt.legend()
 plt.savefig("images/python-noise2d-final.png", format="png")
-
-plt.show()
