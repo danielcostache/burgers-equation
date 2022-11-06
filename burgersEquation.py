@@ -14,8 +14,9 @@
 """
 
 from matplotlib import pyplot as plt        # Module used for 2D plotting
-from mpl_toolkits import mplot3d            # Module used for 3D plotting
+from mpl_toolkits.mplot3d import Axes3D     # Module used for 3D plotting
 import numpy as np                          # Module used for array operations
+from matplotlib import animation
 
 xi = -5         # Initial spatial coordinate
 xf = 5          # Final spatial coordinate
@@ -52,7 +53,8 @@ for kt in range(Nt):
 
 # Plotting a surface graph of u(x,t) as a function of the two parameters
 fig1 = plt.figure()
-ax = plt.axes(projection="3d")
+ax = Axes3D(fig1, auto_add_to_figure=False)
+fig1.add_axes(ax)
 ax.contour3D(t, x, u, 500)
 ax.set_title("Dependency of the speed on time and spatial coordinate")
 ax.set_xlabel("t")
@@ -61,28 +63,39 @@ ax.set_zlabel("u(x,t)")
 ax.view_init(25, 0)
 plt.savefig("images/python-tests/figure1.png", format="png")
 
-# Plotting 2D graphs of u(x,t) as a function of x at the initial and final time moment
-fig2 = plt.figure()
-plt.plot(x, u[:, 1], lw=3, label="Initial time moment")
-plt.xlabel("x")
-plt.ylabel("u(x)")
-plt.title("Dependency of the speed on the spatial coordinate")
-plt.legend()
-plt.savefig("images/python-tests/figure2.png", format="png")
+def init():
+    ax.contour3D(t, x, u, 500)
+    return ()
 
-fig3 = plt.figure()
-plt.plot(x, u[:, Nt], lw=3, label="Final time moment")
-plt.xlabel("x")
-plt.ylabel("u(x)")
-plt.title("Dependency of the speed on the spatial coordinate")
-plt.legend()
-plt.savefig("images/python-tests/figure3.png", format="png")
+def animate(i):
+    ax.view_init(elev=25, azim=i)
+    return ()
 
-fig4 = plt.figure()
-plt.plot(x, u[:, 1], lw=3, label="Initial time moment")
-plt.plot(x, u[:, Nt], lw=3, label="Final time moment")
-plt.xlabel("x")
-plt.ylabel("u(x)")
-plt.title("Dependency of the speed on the spatial coordinate")
-plt.legend()
-plt.savefig("images/python-tests/figure4.png", format="png")
+anim = animation.FuncAnimation(fig1, animate, init_func=init, frames=360, interval=20, blit=True)
+anim.save('images/python-tests/animation.mp4', fps=30, extra_args=['-vcodec', 'libx264'])
+
+# # Plotting 2D graphs of u(x,t) as a function of x at the initial and final time moment
+# fig2 = plt.figure()
+# plt.plot(x, u[:, 1], lw=3, label="Initial time moment")
+# plt.xlabel("x")
+# plt.ylabel("u(x)")
+# plt.title("Dependency of the speed on the spatial coordinate")
+# plt.legend()
+# plt.savefig("images/python-tests/figure2.png", format="png")
+
+# fig3 = plt.figure()
+# plt.plot(x, u[:, Nt], lw=3, label="Final time moment")
+# plt.xlabel("x")
+# plt.ylabel("u(x)")
+# plt.title("Dependency of the speed on the spatial coordinate")
+# plt.legend()
+# plt.savefig("images/python-tests/figure3.png", format="png")
+
+# fig4 = plt.figure()
+# plt.plot(x, u[:, 1], lw=3, label="Initial time moment")
+# plt.plot(x, u[:, Nt], lw=3, label="Final time moment")
+# plt.xlabel("x")
+# plt.ylabel("u(x)")
+# plt.title("Dependency of the speed on the spatial coordinate")
+# plt.legend()
+# plt.savefig("images/python-tests/figure4.png", format="png")
